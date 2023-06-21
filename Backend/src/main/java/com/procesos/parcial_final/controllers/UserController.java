@@ -23,8 +23,14 @@ public class UserController {
     Map data= new HashMap();
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity findUserById(@PathVariable Long id){
+    public ResponseEntity findUserById(@PathVariable Long id,@RequestHeader(value="Authorization") String token){
+        Map response = new HashMap();
         try{
+            if(!userService.Auth(token.substring(7))){
+                response.put("status", "401");
+                response.put("message", "Token invalido");
+                return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+            }
             apiResponse = new ApiResponse(Constants.USER_FOUND,userService.getUser(id));
             return new ResponseEntity(apiResponse, HttpStatus.OK) ;
         }catch(Exception e) {
@@ -46,8 +52,14 @@ public class UserController {
     }
 
     @GetMapping(value = "" )
-    public ResponseEntity Users(){
+    public ResponseEntity Users(@RequestHeader(value="Authorization") String token){
+        Map response = new HashMap();
         try{
+            if(!userService.Auth(token.substring(7))){
+                response.put("status", "401");
+                response.put("message", "Token invalido");
+                return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+            }
             apiResponse = new ApiResponse(Constants.USER_FOUND,userService.allUsers());
             return new ResponseEntity(apiResponse, HttpStatus.OK) ;
         }catch(Exception e) {
@@ -57,7 +69,13 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity updateUser(@PathVariable Long id,@RequestBody User user){
+    public ResponseEntity updateUser(@PathVariable Long id,@RequestBody User user,@RequestHeader(value="Authorization") String token){
+        Map response = new HashMap();
+        if(!userService.Auth(token.substring(7))){
+            response.put("status", "401");
+            response.put("message", "Token invalido");
+            return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+        }
         Boolean res = userService.updateUser(id,user);
         if(res==true){
             apiResponse = new ApiResponse(Constants.REGISTER_UPDATED,"");
