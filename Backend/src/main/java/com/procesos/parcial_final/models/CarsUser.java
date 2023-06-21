@@ -1,4 +1,4 @@
-package com.procesos.parcial_1.models;
+package com.procesos.parcial_final.models;
 
 import lombok.Data;
 

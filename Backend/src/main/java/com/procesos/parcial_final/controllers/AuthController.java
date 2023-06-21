@@ -1,9 +1,9 @@
-package com.procesos.parcial_1.controllers;
+package com.procesos.parcial_final.controllers;
 
-import com.procesos.parcial_1.models.User;
-import com.procesos.parcial_1.services.UserService;
-import com.procesos.parcial_1.utils.ApiResponse;
-import com.procesos.parcial_1.utils.Constants;
+import com.procesos.parcial_final.models.User;
+import com.procesos.parcial_final.services.UserService;
+import com.procesos.parcial_final.utils.ApiResponse;
+import com.procesos.parcial_final.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

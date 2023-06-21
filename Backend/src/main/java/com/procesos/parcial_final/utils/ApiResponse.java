@@ -1,9 +1,7 @@
-package com.procesos.parcial_1.utils;
+package com.procesos.parcial_final.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Map;
 
 @Data
 @AllArgsConstructor

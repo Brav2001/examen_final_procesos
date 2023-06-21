@@ -1,8 +1,6 @@
-package com.procesos.parcial_1.models;
+package com.procesos.parcial_final.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 

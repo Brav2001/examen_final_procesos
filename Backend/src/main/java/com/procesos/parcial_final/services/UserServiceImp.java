@@ -1,9 +1,9 @@
-package com.procesos.parcial_1.services;
+package com.procesos.parcial_final.services;
 
-import com.procesos.parcial_1.models.User;
-import com.procesos.parcial_1.repository.UserRepository;
-import com.procesos.parcial_1.utils.JWTUtil;
-import com.procesos.parcial_1.utils.Constants;
+import com.procesos.parcial_final.models.User;
+import com.procesos.parcial_final.repository.UserRepository;
+import com.procesos.parcial_final.utils.JWTUtil;
+import com.procesos.parcial_final.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

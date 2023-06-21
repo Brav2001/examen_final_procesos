@@ -1,8 +1,8 @@
-package com.procesos.parcial_1.services;
+package com.procesos.parcial_final.services;
 
-import com.procesos.parcial_1.models.CarsUser;
-import com.procesos.parcial_1.models.User;
-import com.procesos.parcial_1.repository.CarsUserRepository;
+import com.procesos.parcial_final.models.CarsUser;
+import com.procesos.parcial_final.models.User;
+import com.procesos.parcial_final.repository.CarsUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

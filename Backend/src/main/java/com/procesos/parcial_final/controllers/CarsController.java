@@ -1,24 +1,15 @@
-package com.procesos.parcial_1.controllers;
+package com.procesos.parcial_final.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.procesos.parcial_1.models.Cars;
-import com.procesos.parcial_1.models.CarsApi;
-import com.procesos.parcial_1.repository.CarsRepository;
-import com.procesos.parcial_1.services.CarsServiceImp;
-import com.procesos.parcial_1.services.UserService;
+import com.procesos.parcial_final.models.Cars;
+import com.procesos.parcial_final.services.CarsServiceImp;
+import com.procesos.parcial_final.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.*;
-
-import static org.springframework.core.convert.TypeDescriptor.forObject;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -114,7 +105,13 @@ public class CarsController {
                 response.put("message", "Token invalido");
                 return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
             }
-            return new ResponseEntity(carsServiceImp.allCars(), HttpStatus.OK) ;
+            if(carsServiceImp.allCars().isEmpty()==false){
+                response.put("data", carsServiceImp.allCars());
+            }
+            else{
+                response.put("data", null);
+            }
+            return new ResponseEntity(response, HttpStatus.OK) ;
         }catch(Exception e) {
             response.put("status", "404");
             response.put("message", "No hay carros");

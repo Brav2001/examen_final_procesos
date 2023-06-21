@@ -1,8 +1,8 @@
-package com.procesos.parcial_1.services;
+package com.procesos.parcial_final.services;
 
-import com.procesos.parcial_1.models.Cars;
-import com.procesos.parcial_1.models.CarsApi;
-import com.procesos.parcial_1.repository.CarsRepository;
+import com.procesos.parcial_final.models.Cars;
+import com.procesos.parcial_final.models.CarsApi;
+import com.procesos.parcial_final.repository.CarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,4 +1,4 @@
-package com.procesos.parcial_1.config;
+package com.procesos.parcial_final.config;
 
 
 import org.springframework.context.annotation.Bean;

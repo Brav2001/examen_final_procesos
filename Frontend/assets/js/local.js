@@ -95,8 +95,8 @@ function listar() {
                         <a href="#"  onclick="verPropiedad('${usuario.id}')" class="btn btn-outline-success cyan">
                             <i class="fa-solid fa-id-card"></i>
                         </a>`
-                                : `<a href="#"   class="btn btn-outline-danger" disabled>
-                            <i class="fa-solid fa-ticket"></i>
+                                : `<a href="#" onclick="noPropiedad()"  class="btn btn-outline-danger" disabled>
+                            <i class="fa-solid fa-id-card"></i>
                             </a>`
                             }
 
@@ -110,6 +110,9 @@ function listar() {
             }
 
         })
+}
+function noPropiedad(){
+    alertas("Este Usuario no tiene carros en propiedad!", 0);
 }
 
 function verPropiedad(id) {
@@ -139,7 +142,7 @@ function verPropiedad(id) {
                 </div>
                 <div class="modal-body" >
                     <div class="p-3 mb-2 bg-light text-dark">
-                        <h1 class="display-5"><i class="fa-solid fa-id-card"></i> Visualizar Propiedad</h1>
+                        <h1 class="display-5"><i class="fa-solid fa-id-card"></i> Ver Propiedad</h1>
                     </div>
                     <div id="listaPropiedad"></div>
                     
@@ -404,12 +407,12 @@ function listarCarros() {
     fetch(urlApi + "/cars", settings)
         .then(response => response.json())
         .then((response) => {
-
+            response=response.data;
             let carros = `
             <div class="p-3 mb-2 bg-light text-dark">
                 <h1 class="display-5 fw-bold"><i class="fa-solid fa-list"></i> LISTADO DE CARROS</h1>
             </div>
-            
+            ${response?'':`<a href="#" onclick="registarCarros()" class="btn btn-outline-success"><i class="fa-solid fa-car"></i></a>`}
             <table class="table">
                 <thead>
                 <tr>
@@ -425,42 +428,72 @@ function listarCarros() {
                 </thead>
                 <tbody>
             `;
-            for (const carro of response) {
-                carros += `
-                <tr>
-                    <th scope="row">${carro.id}</th>
-                    <td>${carro.car}</td>
-                    <td>${carro.car_model}</td>
-                    <td>${carro.car_color}</td>
-                    <td>${carro.car_model_year}</td>
-                    <td>${carro.car_vin}</td>
-                    <td>${carro.price}</td>
+            if(response){
+                for (const carro of response) {
+                    carros += `
+                    <tr>
+                        <th scope="row">${carro.id}</th>
+                        <td>${carro.car}</td>
+                        <td>${carro.car_model}</td>
+                        <td>${carro.car_color}</td>
+                        <td>${carro.car_model_year}</td>
+                        <td>${carro.car_vin}</td>
+                        <td>${carro.price}</td>
 
-                    <td>
-                    <a href="#" onclick="verModificarCarro('${carro.id}')" class="btn btn-outline-warning">
-                        <i class="fa-solid fa-edit"></i>
-                    </a>
-                    <a href="#" onclick="verCarro('${carro.id}')" class="btn btn-outline-info">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
+                        <td>
+                        <a href="#" onclick="verModificarCarro('${carro.id}')" class="btn btn-outline-warning">
+                            <i class="fa-solid fa-edit"></i>
+                        </a>
+                        <a href="#" onclick="verCarro('${carro.id}')" class="btn btn-outline-info">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
 
-                    ${carro.availability ? `
-                        <a href="#" onclick="verVenderCarro('${carro.id}')" class="btn btn-outline-success cyan">
-                            <i class="fa-solid fa-ticket"></i>
-                        </a>`
-                        : `<a href="#"  onclick="CarroNoDisponible()" class="btn btn-outline-danger" disabled>
-                            <i class="fa-solid fa-ticket"></i>
+                        ${carro.availability ? `
+                            <a href="#" onclick="verVenderCarro('${carro.id}')" class="btn btn-outline-success cyan">
+                                <i class="fa-solid fa-ticket"></i>
                             </a>`
-                    }
-                    
-                    </td>
-                </tr>`;
+                            : `<a href="#"  onclick="CarroNoDisponible()" class="btn btn-outline-danger" disabled>
+                                <i class="fa-solid fa-ticket"></i>
+                                </a>`
+                        }
+                        
+                        </td>
+                    </tr>`;
 
+                }
             }
-            carros += `</tbody>
-            </table>`
-            document.getElementById("lista").innerHTML = carros;
-        })
+                carros += `</tbody>
+                </table>`
+                document.getElementById("lista").innerHTML = carros;
+            })
+        
+}
+
+function registarCarros(){
+    validaToken();
+    Swal.fire({
+        title: 'Guardando Carros',
+        didOpen: () => {
+          Swal.showLoading()
+          
+        },
+        didRender:()=>{
+            fetch(urlApi + "/saveCars", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.token
+                },
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    listarCarros();
+                    swal.close();
+                    
+                })
+        }
+      })
 }
 
 function verVenderCarro(id) {
@@ -862,22 +895,23 @@ function alertas(mensaje, tipo) {
 
 function userRegister() {
     cadena = `
-            <div class="p-3 mb-2 bg-light text-dark">
-                <h1 class="display-5"><i class="fa-solid fa-user-pen"></i> Registrar Usuario</h1>
+            <div class="modal-header">
+                <h1 class="display-5"><i class="fa-solid fa-user-plus"></i> Registrar Usuario</h1>
             </div>
-              
-            <form action="" method="post" id="myFormRegister">
-                <input type="hidden" name="id" id="id">
-                <label for="firstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" name="firstName" id="firstName" required> <br>
-                <label for="lastName"  class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="lastName" id="lastName" required> <br>
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" id="email" required> <br>
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required> <br>
-                <button type="button" class="btn btn-outline-info" onclick="registrarUsuario()">Registrar</button>
-            </form>`;
+            <div class="modal-body" > 
+                <form action="" method="post" id="myFormRegister">
+                    <input type="hidden" name="id" id="id">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" name="firstName" id="firstName" required> <br>
+                    <label for="lastName"  class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" id="lastName" required> <br>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" required> <br>
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required> <br>
+                    <button type="button" class="btn btn-outline-info" onclick="registrarUsuario()">Registrar</button>
+                </form>
+            </div>`;
     document.getElementById("contentModal").innerHTML = cadena;
     var myModal = new bootstrap.Modal(document.getElementById('modalUsuario'))
     myModal.toggle();
@@ -904,6 +938,36 @@ async function registrarUsuario() {
     var myModalEl = document.getElementById('modalUsuario')
     var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instance
     modal.hide();
+}
+
+ function register() {
+    var myForm = document.getElementById("myFormRegister");
+    var formData = new FormData(myForm);
+    var jsonData = {};
+    for (var [k, v] of formData) {//convertimos los datos a json
+        jsonData[k] = v;
+    }
+   fetch(urlApi + "/user", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    }).then((response)=>response.json())
+    .then(response=>{
+        if(response.message=="Registro creado"){
+            Swal.fire({
+                icon: 'success',
+                title: 'Usuario resgistrado',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(result=>{
+                window.location="index.html";
+            })
+        }
+    })
+    
 }
 
 function modalConfirmacion(texto, funcion) {

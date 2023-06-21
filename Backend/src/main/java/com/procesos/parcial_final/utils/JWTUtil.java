@@ -1,4 +1,4 @@
-package com.procesos.parcial_1.utils;
+package com.procesos.parcial_final.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;

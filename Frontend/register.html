@@ -11,10 +11,10 @@
 
 <body>
   <div class="box_r">
-    <form action="" id="loginForm">
+    <form action="POST" id="myFormRegister">
       <h2>Registrarse</h2>
       <div class="inputBox">
-        <input type="text" id="firtName" name="firtName" required>
+        <input type="text" id="firstName" name="firstName" required>
         <span>Nombre</span>
         <i></i>
       </div>
@@ -24,7 +24,7 @@
         <i></i>
       </div>
       <div class="inputBox">
-        <input type="date" id="birtday" name="birtday" value="" required>
+        <input type="date" id="birthday" name="birthday" value="" required>
         <span>Fecha de nacimiento</span>
         <i></i>
       </div>
@@ -43,7 +43,7 @@
         <span>Contraseña</span>
         <i></i>
       </div>
-      <button type="button" class="btn btn-primary" onclick="userRegister()">Registrarse</button>
+      <button type="button" class="btn btn-primary" onclick="register()">Registrarse</button>
       <div class="links">
         <a href="index.html" class="btn btn-outline-info">¿Ya tienes cuenta?</a>
       </div>
@@ -51,7 +51,7 @@
   </div>
   <!-- <script src="js/local.js"></script> -->
   <script src="assets/js/local.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

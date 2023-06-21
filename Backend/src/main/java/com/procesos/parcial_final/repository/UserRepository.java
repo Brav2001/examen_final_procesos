@@ -1,6 +1,6 @@
-package com.procesos.parcial_1.repository;
+package com.procesos.parcial_final.repository;
 
-import com.procesos.parcial_1.models.User;
+import com.procesos.parcial_final.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
